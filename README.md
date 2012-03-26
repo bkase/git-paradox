@@ -37,7 +37,10 @@ where <commit> is some of the first characters in the commit hash, or a shortcut
 
 At this time, there are no options
 
-### Why call it `git-paradox`
+### How to install
+Clone the repository and copy the `git-paradox` file to a folder somewhere in your path (like /usr/bin/ on Linux).
+
+### Why call it `git-paradox`?
 When this command is issued, some state of the repository from the past is simultaneously existing in both the past and present. Any commits after this one from the past still exist as they once did, but this one is now both in front of and behind this set of commits.
 
 It's sort of like a time paradox.
