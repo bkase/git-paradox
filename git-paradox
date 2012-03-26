@@ -53,7 +53,7 @@ then
     up_until_folder
     make_hook
     echo $checkout_commit > $gitfolder/.paradox
-    #if commit fails, retrieve deleted files
+    #if commit aborts, retrieve deleted files
     if ! git commit
     then
         git rm -rf .
