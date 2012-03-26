@@ -37,7 +37,7 @@ make_hook() {
 gitfolder=`git rev-parse --git-dir`
 if test -e $gitfolder/.paradox
 then
-commit=`cat $gitfolder/.paradox | cut -c 1-10`..
+commit=`cat $gitfolder/.paradox | cut -c 1-7`..
 contents=`cat $1`
 echo "Time paradox: $commit is at the tip" > $gitfolder/.msgbuild
 echo >> $gitfolder/.msgbuild
