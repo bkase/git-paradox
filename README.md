@@ -32,6 +32,6 @@ where <commit> is some of the first characters in the commit hash, or a shortcut
 At this time, there are no options
 
 ### Why call it `git-paradox`
-What's happening when this command is issued is some state of the repository from the past is simoultaneously existing in both the past and present. Any commits after this one from the past still exist as they did, but this one is now both in front of and behind this set of commits.
+When this command is issued, some state of the repository from the past is simultaneously existing in both the past and present. Any commits after this one from the past still exist as they once did, but this one is now both in front of and behind this set of commits.
 
 It's sort of like a time paradox.
