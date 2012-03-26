@@ -1,0 +1,78 @@
+#!/bin/sh
+
+no_changes () {
+	git diff-index --quiet --cached HEAD --ignore-submodules -- &&
+	git diff-files --quiet --ignore-submodules &&
+	(test -z "$untracked" || test -z "$(untracked_files)")
+}
+
+list_files() {
+    echo -n "     "
+    git status | egrep '(modified:   |new file:   )' | cut -c12-
+    echo
+}
+
+usage() {
+    echo "usage: git paradox [options] commit"
+    echo
+}
+
+up_until_folder() {
+    gitfolder=`git rev-parse --git-dir`
+    return $?
+}
+
+make_hook() {
+    echo '#!/bin/sh
+#
+# An example hook script to prepare the commit log message.
+# Called by "git commit" with the name of the file that has the
+# commit message, followed by the description of the commit
+# message's source.  The hook's purpose is to edit the commit
+# message file.  If the hook fails with a non-zero status,
+# the commit is aborted.
+#
+# To enable this hook, rename this file to "prepare-commit-msg".
+
+gitfolder=`git rev-parse --git-dir`
+if test -e $gitfolder/.paradox
+then
+commit=`cat $gitfolder/.paradox | cut -c 1-10`..
+contents=`cat $1`
+echo "Time paradox: $commit is at the tip" > $gitfolder/.msgbuild
+echo >> $gitfolder/.msgbuild
+echo "$contents" >> $gitfolder/.msgbuild
+cat $gitfolder/.msgbuild > $1
+fi
+' > $gitfolder/hooks/prepare-commit-msg
+    chmod +x $gitfolder/hooks/prepare-commit-msg
+}
+
+if test $# -eq 0
+then
+    usage
+    exit 1
+fi
+
+if no_changes
+then
+    git rm -r .
+    git checkout $* .
+    checkout_commit=`git log | egrep "commit $1" | awk '{ print $2 }'`
+    up_until_folder
+    make_hook
+    echo $checkout_commit > $gitfolder/.paradox
+    #if commit fails, retrieve deleted files
+    git commit || git checkout HEAD .
+    rm $gitfolder/.paradox
+    exit 0
+fi
+
+echo "error: Your local changes to the following files would be overwritten by the time paradox:"
+
+list_files
+
+echo "Please, commit your changes or stash them before you initiate a time paradox" 
+echo "Aborting"
+
+exit 1  
