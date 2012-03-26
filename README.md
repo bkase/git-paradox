@@ -23,6 +23,12 @@ The first line is pretty scary: Delete everything. Then things start making sens
 I felt that this is a fundamental funtion should be accessible with only one command.
 Use it if you want an easy way to take some commit from the past and copy it to the tip of a branch.
 
+As an example, lets say you want 5 commits ago to also be at the tip of your branch:
+
+```bash
+git paradox HEAD~5
+```
+
 ### Usage
 ```bash
 git paradox [options] <commit>
