@@ -1,5 +1,7 @@
 # git-paradox
 ---
+![](http://i.imgur.com/tnEG7.png)
+
 ### What is it? Why use it?
 `git-paradox` is an additional command to git that creates what I would call a "time paradox".
 
