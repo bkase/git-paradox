@@ -9,9 +9,11 @@
 
 Essentially, all I want to do is take that working commit from HEAD~5 and bring it to the tip of my current branch. I don't want to lose my history, so I don't want to `git reset --hard HEAD~5`.
 After searching on the internet for a while, I found a lot of solutions, and they all were several lines and unintuitive. This is the best one I could find:
-```shell
+```
 git rm -r .
+
 git checkout HEAD~5 .
+
 git commit
 ```
 The first line is pretty scary: Delete everything. Then things start making sense once you hit the next line since you don't want to have any new files in your working directory. If you abort the commit (let's say you changed your mind at this point). You have to do `git rm -rf .; git checkout HEAD .` in order to recover.
@@ -20,7 +22,7 @@ I felt that this is a fundamental funtion should be accessible with only one com
 Use it if you want an easy way to take some commit from the past and copy it to the tip of a branch.
 
 ### Usage
-```shell
+```
 git paradox [options] <commit>
 ```
 where <commit> is some of the first characters in the commit hash, or a shortcut like HEAD~n, or HEAD^^^
