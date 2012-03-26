@@ -54,7 +54,11 @@ then
     make_hook
     echo $checkout_commit > $gitfolder/.paradox
     #if commit fails, retrieve deleted files
-    git commit || git checkout HEAD .
+    if ! git commit
+    then
+        git rm -rf .
+        git checkout HEAD .
+    fi
     rm $gitfolder/.paradox
     exit 0
 fi
