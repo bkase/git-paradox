@@ -58,7 +58,8 @@ if no_changes
 then
     git rm -r .
     git checkout $* .
-    checkout_commit=`git log | egrep "commit $1" | awk '{ print $2 }'`
+    commit=`git rev-parse $*`
+    checkout_commit=`git log | egrep "commit $commit" | awk '{ print $2 }'`
     up_until_folder
     make_hook
     echo $checkout_commit > $gitfolder/.paradox
