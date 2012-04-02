@@ -40,9 +40,11 @@ At this time, there are no options
 ## How to install
 From this point forward `master` will be stable
 
+[Install from AUR](https://aur.archlinux.org/packages.php?ID=58154)
+
+or 
 
 Clone the repo somewhere and 
-
 add repo to your path
 
 ```bash
