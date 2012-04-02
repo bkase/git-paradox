@@ -1,4 +1,5 @@
 # git-paradox
+Pull requests welcome!
 ---
 ![](http://i.imgur.com/tnEG7.png)
 
