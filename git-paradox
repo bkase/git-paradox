@@ -30,7 +30,6 @@ then
 commit=`cat $gitfolder/.paradox | cut -c 1-7`..
 contents=`cat $1`
 echo "Time paradox: $commit is at the tip" > $gitfolder/.msgbuild
-echo >> $gitfolder/.msgbuild
 echo "$contents" >> $gitfolder/.msgbuild
 cat $gitfolder/.msgbuild > $1
 fi
@@ -46,8 +45,8 @@ fi
 
 if no_changes
 then
-    git rm -r .
-    git checkout $* .
+    git rm -rq .
+    git checkout -q $* .
     commit=`git rev-parse $*`
     checkout_commit=`git log | egrep "commit $commit" | awk '{ print $2 }'`
     up_until_folder
@@ -56,8 +55,8 @@ then
     #if commit aborts, retrieve deleted files
     if ! git commit
     then
-        git rm -rf .
-        git checkout HEAD .
+        git rm -rfq .
+        git checkout -q HEAD .
     fi
     rm $gitfolder/.paradox
     exit 0
