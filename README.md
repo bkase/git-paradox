@@ -38,6 +38,9 @@ where <commit> is some of the first characters in the commit hash, or a shortcut
 At this time, there are no options
 
 ## How to install
+From this point forward `master` will be stable
+
+
 Clone the repo somewhere and 
 
 add repo to your path
