@@ -2,7 +2,7 @@
 ---
 ![](http://i.imgur.com/tnEG7.png)
 
-### What is it? Why use it?
+## What is it? Why use it?
 `git-paradox` is an additional command to git that creates what I would call a "time paradox".
 
 *`git-paradox` takes the data from some commit in the past and brings it to the present without disturbing any of the past*
@@ -29,7 +29,7 @@ As an example, lets say you want 5 commits ago to also be at the tip of your bra
 git paradox HEAD~5
 ```
 
-### Usage
+## Usage
 ```bash
 git paradox [options] <commit>
 ```
@@ -37,10 +37,24 @@ where <commit> is some of the first characters in the commit hash, or a shortcut
 
 At this time, there are no options
 
-### How to install
-Clone the repository and copy the `git-paradox` file to a folder somewhere in your path (like /usr/bin/ on Linux).
+## How to install
+Clone the repo somewhere and 
 
-### Why call it `git-paradox`?
+add repo to your path
+
+```bash
+cd /path/to/somewhere
+git clone https://bkase@github.com/bkase/git-paradox.git
+PATH=$PATH:/path/to/somewhere
+```
+or copy `git-paradox` to a folder in your path
+
+```bash
+git clone https://bkase@github.com/bkase/git-paradox.git
+sudo cp git-paradox /usr/bin
+```
+
+## Why call it `git-paradox`?
 When this command is issued, some state of the repository from the past is simultaneously existing in both the past and present. Any commits after this one from the past still exist as they once did, but this one is now both in front of and behind this set of commits.
 
 It's sort of like a time paradox.
