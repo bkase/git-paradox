@@ -33,7 +33,7 @@ git paradox HEAD~5
 ```bash
 git paradox [options] <commit>
 ```
-where <commit> is some of the first characters in the commit hash, or a shortcut like HEAD~n, or HEAD^^^
+where commit is some of the first characters in the commit hash, or a shortcut like HEAD~n, or HEAD^^^
 
 At this time, there are no options
 
