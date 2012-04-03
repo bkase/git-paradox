@@ -17,24 +17,14 @@ usage() {
     echo
 }
 
-up_until_folder() {
-    gitfolder=`git rev-parse --git-dir`
-    return $?
-}
+make_msg() {
+    # From http://stackoverflow.com/questions/1593051/how-to-programmatically-determine-the-current-checked-out-git-branch
+    branch="$(git symbolic-ref HEAD 2>/dev/null)" ||
+    branch="(unnamed branch)"     # detached HEAD
 
-make_hook() {
-    echo '#!/bin/sh
-gitfolder=`git rev-parse --git-dir`
-if test -e $gitfolder/.paradox
-then
-commit=`cat $gitfolder/.paradox | cut -c 1-7`..
-contents=`cat $1`
-echo "Time paradox: $commit is at the tip" > $gitfolder/.msgbuild
-echo "$contents" >> $gitfolder/.msgbuild
-cat $gitfolder/.msgbuild > $1
-fi
-' > $gitfolder/hooks/prepare-commit-msg
-    chmod +x $gitfolder/hooks/prepare-commit-msg
+    branch=${branch##refs/heads/}
+
+    echo "Time paradox: $short_commit.. is now at the tip" > $gitfolder/.paradox-msg
 }
 
 if test $# -eq 0
@@ -46,19 +36,22 @@ fi
 if no_changes
 then
     git rm -rq .
-    git checkout -q $* .
-    commit=`git rev-parse $*`
-    checkout_commit=`git log | egrep "commit $commit" | awk '{ print $2 }'`
-    up_until_folder
-    make_hook
-    echo $checkout_commit > $gitfolder/.paradox
+    
+    commit=`git rev-parse $1`
+    short_commit=`git rev-parse --short $1`
+
+    git checkout -q $commit .
+    
+    gitfolder=`git rev-parse --git-dir`
+    make_msg
+
     #if commit aborts, retrieve deleted files
-    if ! git commit
+    if ! git commit --file $gitfolder/.paradox-msg
     then
         git rm -rfq .
         git checkout -q HEAD .
     fi
-    rm $gitfolder/.paradox
+    rm $gitfolder/.paradox-msg
     exit 0
 fi
 
