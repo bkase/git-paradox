@@ -8,6 +8,9 @@ Pull requests welcome!
 
 *`git-paradox` takes the data from some commit in the past and brings it to the present without disturbing any of the past*
 
+![](http://i.imgur.com/4PYqS.png)
+Flowchart made with [Gliffy](http://www.gliffy.com/)
+
 `git-paradox` solves a common problem that I keep running into while working on projects: I realize that for the past 5 commits, the code that I have been working on is fundamentally broken, or it's broken in such a way that fixing the errors would take longer than just starting from when the code was working.
 
 Essentially, all I want to do is take that working commit from HEAD~5 and bring it to the tip of my current branch. I don't want to lose my history, so I don't want to `git reset --hard HEAD~5`.
