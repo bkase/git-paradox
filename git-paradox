@@ -13,8 +13,29 @@ list_files() {
 }
 
 usage() {
-    echo "usage: git paradox [options] commit"
-    echo
+    echo "usage: git paradox [options] commit" >&2
+    echo "Copy commit to the tip of the current branch easily and safely" >&2
+    echo "where commit is part of a commit hash 'ea342e' or a shortcut "
+    echo "      such as 'HEAD^^', 'HEAD~5'" >&2
+    echo "" >&2
+    echo "Options:" >&2
+    echo "  -m <msg>                the message to be inserted two lines
+                                after 'Time paradox: <hash>.. is now at 
+                                the tip' in the commit" >&2
+    echo "  -M <msg>                the message to be inserted in the 
+                                commit" >&2
+    echo "  -f <msg-file>           a file whose contents are to be 
+                                inserted two lines after 'Time paradox: 
+                                <hash>.. is now at the tip' in the commit" >&2
+    echo "  -F <msg-file>           a file whose contents are to be 
+                                inserted in the in the commit" >&2
+    echo >&2
+    echo "Examples:" >&2
+    echo "  git paradox ea342"
+    echo "  git paradox -M 'Back to when module X was working'"
+    echo "  git paradox -f file.whose.contents.are.message.txt"
+    echo >&2
+    echo "Report any issues to https://github.com/bkase/git-paradox"
 }
 
 make_msg() {
@@ -24,11 +45,84 @@ make_msg() {
 
     branch=${branch##refs/heads/}
 
-    echo "Time paradox: $short_commit.. is now at the tip" > $gitfolder/.paradox-msg
+    if [ "$replace_orig_message" == "" ]
+    then
+        echo "Time paradox: $short_commit.. is now at the tip" > $gitfolder/.paradox-msg
+    fi
+
+    message="$message""$template"
+    if [ "$message" != "" ]
+    then
+        if [ "$replace_orig_message" == "" ]
+        then
+            echo >> $gitfolder/.paradox-msg
+        fi
+        echo "$message" >> $gitfolder/.paradox-msg
+    fi
 }
+
+message_opt() {
+    if [ "$template" == "" ]
+    then
+        message=$OPTARG
+    else
+        echo "You can't give both a message in the shell and from a file" >&2
+        echo >&2
+        usage
+        exit 1
+    fi
+}
+
+file_opt() {
+    if [ "$message" == "" ]
+    then
+        template=`cat $OPTARG`
+    else
+        echo "You can't give both a message from a file and in the shell" >&2
+        echo >&2
+        usage
+        exit 1
+    fi
+}
+
+#From http://blog.mafr.de/2007/08/05/cmdline-options-in-shell-scripts/
+message=
+template=
+replace_orig_message=
+while getopts hm:f:F:M: OPT; do
+    case "$OPT" in
+        h)
+            usage
+            exit 0
+            ;;
+        M)
+            message_opt
+            replace_orig_message="yes"
+            ;;
+        m)
+            message_opt
+            ;;
+        F)
+            file_opt
+            replace_orig_message="yes"
+            ;;
+        f)
+            file_opt
+            ;;
+        \?)
+            usage
+            exit 1
+            ;;
+    esac
+done
+
+#remove switches
+shift `expr $OPTIND - 1`
 
 if test $# -eq 0
 then
+    echo "You must give a commit!" >&2
+    echo >&2
     usage
     exit 1
 fi
