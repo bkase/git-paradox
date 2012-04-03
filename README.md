@@ -37,11 +37,30 @@ git paradox HEAD~5
 
 ## Usage
 ```bash
-git paradox [options] <commit>
-```
-where commit is some of the first characters in the commit hash, or a shortcut like HEAD~n, or HEAD^^^
+usage: git paradox [options] <commit>
+Copy commit to the tip of the current branch easily and safely
+where commit is part of a commit hash 'ea342e' or a shortcut 
+      such as 'HEAD^^', 'HEAD~5'
 
-At this time, there are no options
+Options:
+  -m <msg>                the message to be inserted two lines
+                                after 'Time paradox: <hash>.. is now at 
+                                the tip' in the commit
+  -M <msg>                the message to be inserted in the 
+                                commit
+  -f <msg-file>           a file whose contents are to be 
+                                inserted two lines after 'Time paradox: 
+                                <hash>.. is now at the tip' in the commit
+  -F <msg-file>           a file whose contents are to be 
+                                inserted in the in the commit
+
+Examples:
+  git paradox ea342
+  git paradox -M 'Back to when module X was working'
+  git paradox -f file.whose.contents.are.message.txt
+
+Report any issues to https://github.com/bkase/git-paradox
+```
 
 ## How to install
 From this point forward `master` will be stable
