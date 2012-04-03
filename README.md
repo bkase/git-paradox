@@ -8,6 +8,8 @@ Pull requests welcome!
 
 *`git-paradox` takes the data from some commit in the past and brings it to the present without disturbing any of the past*
 
+[See full-size image](http://i.imgur.com/4PYqS.png)
+
 ![](http://i.imgur.com/4PYqS.png)
 Flowchart made with [Gliffy](http://www.gliffy.com/)
 
