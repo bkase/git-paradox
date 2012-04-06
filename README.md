@@ -43,17 +43,14 @@ where commit is part of a commit hash 'ea342e' or a shortcut
       such as 'HEAD^^', 'HEAD~5'
 
 Options:
-  -m <msg>                the message to be inserted two lines
-                                after 'Time paradox: <hash>.. is now at 
-                                the tip' in the commit
-  -M <msg>                the message to be inserted in the 
-                                commit
+  -m <msg>                the message to be inserted after the 
+                                message indicating rollback in the commit
+  -M <msg>                the message to be inserted in the commit
   -f <msg-file>           a file whose contents are to be 
-                                inserted two lines after 'Time paradox: 
-                                <hash>.. is now at the tip' in the commit
+                                inserted after the message indicating 
+                                rollback in the commit
   -F <msg-file>           a file whose contents are to be 
                                 inserted in the in the commit
-
 Examples:
   git paradox ea342
   git paradox -M 'Back to when module X was working'

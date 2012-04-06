@@ -19,23 +19,21 @@ usage() {
     echo "      such as 'HEAD^^', 'HEAD~5'" >&2
     echo "" >&2
     echo "Options:" >&2
-    echo "  -m <msg>                the message to be inserted two lines
-                                after 'Time paradox: <hash>.. is now at 
-                                the tip' in the commit" >&2
-    echo "  -M <msg>                the message to be inserted in the 
-                                commit" >&2
+    echo "  -m <msg>                the message to be inserted after the 
+                                message indicating rollback in the commit" >&2
+    echo "  -M <msg>                the message to be inserted in the commit" >&2
     echo "  -f <msg-file>           a file whose contents are to be 
-                                inserted two lines after 'Time paradox: 
-                                <hash>.. is now at the tip' in the commit" >&2
+                                inserted after the message indicating 
+                                rollback in the commit" >&2
     echo "  -F <msg-file>           a file whose contents are to be 
                                 inserted in the in the commit" >&2
     echo >&2
     echo "Examples:" >&2
-    echo "  git paradox ea342"
-    echo "  git paradox -M 'Back to when module X was working'"
-    echo "  git paradox -f file.whose.contents.are.message.txt"
+    echo "  git paradox ea342" >&2
+    echo "  git paradox -M 'Back to when module X was working'" >&2
+    echo "  git paradox -f file.whose.contents.are.message.txt" >&2
     echo >&2
-    echo "Report any issues to https://github.com/bkase/git-paradox"
+    echo "Report any issues to https://github.com/bkase/git-paradox" >&2
 }
 
 make_msg() {
@@ -47,16 +45,18 @@ make_msg() {
 
     if [ "$replace_orig_message" == "" ]
     then
-        echo "Time paradox: $short_commit.. is now at the tip" > $gitfolder/.paradox-msg
+        echo "Roll back to $short_commit.." > $gitfolder/.paradox-msg
+        echo >> $gitfolder/.paradox-msg
+        echo "This commit has an identical working tree to $short_commit.." >> $gitfolder/.paradox-msg
     fi
 
     message="$message""$template"
     if [ "$message" != "" ]
     then
-        if [ "$replace_orig_message" == "" ]
-        then
-            echo >> $gitfolder/.paradox-msg
-        fi
+        #if [ "$replace_orig_message" == "" ]
+        #then
+            #echo >> $gitfolder/.paradox-msg
+        #fi
         echo "$message" >> $gitfolder/.paradox-msg
     fi
 }
